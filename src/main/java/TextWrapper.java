@@ -1,17 +1,22 @@
 class TextWrapper {
 
+
     public static String wrap(String text, int width) {
         if (text == null)
             return "";
-        text = text.trim();
-        return text.length() <= width ? text : breakTextInLines(text, width);
+        if (text.length() <= width) {
+            return text.trim();
+        }
+        return breakText(text, width);
     }
 
-    private static String breakTextInLines(String text, int width) {
-        int breakLineIndex = text.substring(0, width + 1).lastIndexOf(' ');
-        breakLineIndex = breakLineIndex == -1 ? width : breakLineIndex;
-        String line = text.substring(0, breakLineIndex);
-        String nextLines = text.substring(breakLineIndex);
+    private static String breakText(String text, int width) {
+        int breakPoint = text.substring(0, width+1).lastIndexOf(' ');
+        if (breakPoint == -1) {
+            breakPoint = width;
+        }
+        String line = text.substring(0, breakPoint);
+        String nextLines = text.substring(breakPoint).trim();
         return line + '\n' + wrap(nextLines, width);
     }
 }
