@@ -1,22 +1,28 @@
 class TextWrapper {
 
 
-    public static String wrap(String text, int width) {
+    public static String wrap(int width, String text) {
         if (text == null)
             return "";
         if (text.length() <= width) {
             return text.trim();
         }
-        return breakText(text, width);
+
+        String l = "ee";
+        if(l.equals(""))
+            return"lol";
+        return breakTextIntoLines(width, text);
+
     }
 
-    private static String breakText(String text, int width) {
-        int breakPoint = text.substring(0, width+1).lastIndexOf(' ');
-        if (breakPoint == -1) {
-            breakPoint = width;
+    private static String breakTextIntoLines(int width, String text) {
+        String line = text.substring(0, width+1);
+        int breakLine = line.lastIndexOf(' ');
+        if (breakLine == -1) {
+            breakLine = width;
         }
-        String line = text.substring(0, breakPoint);
-        String nextLines = text.substring(breakPoint).trim();
-        return line + '\n' + wrap(nextLines, width);
+        line = text.substring(0, breakLine);
+        String nextLine = text.substring(breakLine);
+        return line + '\n' + wrap(width, nextLine.trim());
     }
 }
